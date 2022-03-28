@@ -100,7 +100,7 @@ void menu(int num) {
     addIndividual=false;
     addGroup=true;
     addAttractionPt = false;
-      AddAdversary=false;
+    AddAdversary=false;
   }
   else if( num == 3 ) {
     addAttractionPt = true;

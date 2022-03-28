@@ -13,8 +13,8 @@ Simulator::Simulator() {
     double x = 50+200*(myRand()-0.5);
     double y = 50+200*(myRand()-0.5);
     double z = 0;
-    bool isAdv=false;
-    AddMember(i,x,y,isAdv);
+    bool isAdv;
+    AddMember(i,x,y, isAdv);
     /*
     Vector3d pos(x,y,z);
     //vel
@@ -53,17 +53,15 @@ void Simulator::AddMember(int index, double x, double y,bool isAdv) {
   double viewRadius = 40 + myRand() * 10; //random between 40 and 50
   //agents.push_back( Vector3d(x,y) );
     
-  Agent a_i;
-    //if adversary then change speed and initialize values
+    Agent a_i;
     if(isAdv){
-        maxVel=.5;
-        a_i.SetIsAdversary(isAdv);
+        maxVel=14;
+        a_i.Init(i,pos,vel,mass,maxVel,maxAccel,viewRadius,isAdv);
+        a_i.AdversaryRules(isAdv);
     }
-    
-  a_i.Init(i,pos,vel,mass,maxVel,maxAccel,viewRadius);
-  //  a_i.SetIsAdversary(isAdv);
+       a_i.Init(i,pos,vel,mass,maxVel,maxAccel,viewRadius,isAdv);
+       a_i.SetIsAdversary(isAdv);
   agents.push_back( a_i );
-    
 }
 
 void Simulator::Draw() {

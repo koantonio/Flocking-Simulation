@@ -11,7 +11,7 @@ public:
   Agent(const Agent& other);
 
   //void Init(int _id, Vector3d _pos, Vector3d _vel, double _mass, double _maxVel, double _maxAccel, double _viewRadius, bool _isAdversary);
-    void Init(int _id, Vector3d _pos, Vector3d _vel, double _mass, double _maxVel, double _maxAccel, double _viewRadius);
+    void Init(int _id, Vector3d _pos, Vector3d _vel, double _mass, double _maxVel, double _maxAccel, double _viewRadius, bool _isAdv);
   Vector3d& GetPos() { return pos; }
   Vector3d& GetVel() { return vel; }
   double GetRadius() { return radius; }
@@ -30,6 +30,10 @@ public:
   Vector3d GetForceFromControl();
   void ResolveCollisionWithOtherAgents(vector<Agent>& agents);
   Vector3d GetEnvironmentalForce(double mag);
+    
+    void Attack();
+    
+ void AdversaryRules(bool isAdv);
  
 private:
   int id;
@@ -53,6 +57,8 @@ private:
   double maxVel;
   double maxAccel;
   double viewRadius;
+    
+    bool isAdv;
 
   bool initialized;
 
@@ -62,6 +68,7 @@ private:
   bool drawVelocity;
   bool drawVR;
 
+  
 
   /////////////////////////
   double ori;

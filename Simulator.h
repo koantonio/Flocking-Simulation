@@ -13,7 +13,7 @@ class Simulator {
    public:
       Simulator(); 
 
-      void AddMember(int index, double x, double y,bool isAdv);
+      void AddMember(int index, double x, double y,bool _isAdv);
 
       void Draw();
       void Update();
