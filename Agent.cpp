@@ -155,7 +155,7 @@ void Agent::Update(vector<Agent>& agents, double dt) {
         
               for(int i=0; i<(int)agents.size(); i++) {
                 if( id == i ) continue; //skip self
-                //see if within view radius
+                //see if within view radius/////////////////////////////////
                 double dist = (agents[i].GetPos()-pos).norm();
                     if( dist < viewRadius ) {
                       if( agents[i].IsAdversary() && (dist<(radius+agents[i].GetRadius()+2.0)) ) {
@@ -212,7 +212,13 @@ void Agent::Update(vector<Agent>& agents, double dt) {
               closeDist = dist;
               numSeen++;
             }
+              //if radius+agents radius is less than distance
+              if (IsAdversary() && (dist+.02 < (radius + agents[i].GetRadius()))) {
+              agents[closestIndex].setIsAdversary(true);
+              if (agents[i].IsAdversary()) continue;
+              }
           }//endfor i
+        
           force = maxAccel*(agents[closestIndex].GetPos()-pos).normalize();
     }
       
@@ -416,67 +422,6 @@ void Agent::SetIsAdversary(bool isAdv){
     isAdversary= isAdv;
 }
 
-void Agent::Attack() {
-    glColor3f(1,0,0);
-  if( drawMode == 1 ) {
-    glPushMatrix();
-    glTranslatef(pos.GetX(), pos.GetY(), 0);
-    drawAgentAsCircle(radius, 10, isControlled, 1.0*status/maxStatus);
-    glPopMatrix();
-  }
-  else if( drawMode == 2 ) {
-    glPushMatrix();
-    glTranslatef(pos.GetX(), pos.GetY(), 0);
-    glRotated( radToDeg(ori), 0,0,1);
-    drawTriangle(2*radius, isControlled);
-    drawTriangleStatus(2*radius, 1.0*status/maxStatus);
-    glPopMatrix();
-  }
-  else {
-    glPushMatrix();
-    glTranslatef(pos.GetX(), pos.GetY(), 0);
-    drawCircle(radius, 10, isControlled);
-    glPopMatrix();
-    glColor3f(0.8,0.8,0.8);
-    glLineWidth(2);
-    glBegin(GL_LINE_STRIP);
-    for(int i=0; i<(int)pastPos.size(); i++) {
-      glVertex2f(pastPos[i][0],pastPos[i][1]);
-    }
-    glEnd();
-  }
-
-  if( drawForce ) {
-    glColor3f(1.0, 0.48, 0.0);
-    glBegin(GL_LINES);
-    glVertex2f( pos.GetX(),pos.GetY() );
-    glVertex2f( pos.GetX()+separationForce.GetX(), pos.GetY()+separationForce.GetY() );
-    glEnd();
-
-    glColor3f(0.0, 0.0, 1.0);
-    glBegin(GL_LINES);
-    glVertex2f( pos.GetX(),pos.GetY() );
-    glVertex2f( pos.GetX()+cohesionForce.GetX(), pos.GetY()+cohesionForce.GetY() );
-    glEnd();
-
-    glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_LINES);
-    glVertex2f( pos.GetX(),pos.GetY() );
-    glVertex2f( pos.GetX()+alignmentForce.GetX(), pos.GetY()+alignmentForce.GetY() );
-    glEnd();
-  }
-
-  if( drawVelocity ) {
-    //cout << "drawVelocity" << endl;
-    glColor3f(1.0, 1.0, 0.0);
-    glBegin(GL_LINES);
-    glVertex2f( pos.GetX(),pos.GetY() );
-    glVertex2f( pos.GetX()+vel.GetX(), pos.GetY()+vel.GetY() );
-    glEnd();
-  }
-  else { /*cout << "NO drawVelocity. " << endl;*/ }
-}
-
 void Agent::Draw() {
     if(isAdversary){
         glColor3f(1,0,0 );
@@ -493,9 +438,11 @@ void Agent::Draw() {
   */
   if( drawMode == 1 ) {
     glPushMatrix();
+    //if Adversary is true=change to red Color
+      if(isAdversary){
+          glColor3f(1,0,0 );
+      }
     glTranslatef(pos.GetX(), pos.GetY(), 0);
-    //drawCircle(radius, 10, isControlled); ///////////////////////
-      
     //this line starts the drawing of ALL agents
     drawAgentAsCircle(radius, 10, isControlled, 1.0*status/maxStatus);
     glPopMatrix();
@@ -503,7 +450,7 @@ void Agent::Draw() {
   else if( drawMode == 2 ) {
     glPushMatrix();
     glTranslatef(pos.GetX(), pos.GetY(), 0);
-    glRotated( radToDeg(ori), 0,0,1);
+    glRotated( radToDeg(20), 0,0,1);
     drawTriangle(2*radius, isControlled);
     drawTriangleStatus(2*radius, 1.0*status/maxStatus);
     glPopMatrix();
@@ -521,7 +468,7 @@ void Agent::Draw() {
     }
     glEnd();
   }
-
+/*
   if( drawForce ) {
     glColor3f(1.0, 0.48, 0.0);
     glBegin(GL_LINES);
@@ -550,7 +497,8 @@ void Agent::Draw() {
     glVertex2f( pos.GetX()+vel.GetX(), pos.GetY()+vel.GetY() );
     glEnd();
   }
-  else { /*cout << "NO drawVelocity. " << endl;*/ }
+  else { /*cout << "NO drawVelocity. " << endl; }
+*/
 }
 
 void Agent::ResolveCollisionWithOtherAgents(vector<Agent>& agents) {

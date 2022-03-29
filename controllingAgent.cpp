@@ -166,7 +166,7 @@ void customDraw() {
   gEnv->Draw();
   gSim.Draw();
 
-  glFlush();                        //Process all OpenGL routines as quickly as possible.
+  glFlush();       //Process all OpenGL routines as quickly as possible.
 }
 
 void mousebutton(int button, int state, int x, int y)
@@ -237,9 +237,9 @@ void setBackgroundColor(int colorIndex, double colorDif, double colorRange) {
 void mouseMove(int mx, int my) {
 	cout << "mouseMove mx: " << mx << " my: " << my << endl;
 	//int changeY = my - homeY;
-	changeY = my - homeY;
+	//changeY = my - homeY;
 	//speedTheta *=1.05;
-	//theta += changeY*speedTheta;
+	theta += changeY*speedTheta;
 	cout << "theta " << theta << " speedTheta " << speedTheta << " changeY " << changeY << endl;
 	changeX = mx - homeX;
 	alpha = 0.5+ (1.0*changeX)/windowW;
@@ -251,10 +251,9 @@ void mouseMove(int mx, int my) {
 	double colorDif = ((ratioInScreen*colors.size())-colorIndex)/colors.size();
 	cout << "alpha " << alpha << " mx " << mx << " homeX " << homeX << endl;
 	cout <<" ratioInScreen " << ratioInScreen << " colorIndex " << colorIndex << " colorRange " << colorRange << " colorDif " << colorDif << endl;
- 	setBackgroundColor(colorIndex, colorDif, colorRange);	
-
+ 	setBackgroundColor(colorIndex, colorDif, colorRange);
 }
-*/
+ */
 
 void keyboard(unsigned char key, int x, int y)
 {
@@ -323,7 +322,7 @@ int main(int argc, char** argv) {
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);   //Set display mode.
 	//glutInitWindowPosition(50, 100);               //Set top-left display-window position.
 	glutInitWindowSize(windowW, windowH);                  //Set display-window width and height.
-	window_id = glutCreateWindow("Make Polygon");  //Create display window.
+	window_id = glutCreateWindow("Pandemic Fish");  //Create display window.
 
 	init();                                        //Execute initialization procedure.
 	//string fileToLoad = "ConvexConcaveInputs/obj6.txt";
@@ -337,6 +336,7 @@ int main(int argc, char** argv) {
 	glutKeyboardFunc(keyboard);
 	glutMouseFunc(mousebutton);                    //How to handle mouse press events. 
 	//glutMotionFunc(mouseMove);
+    
 	glutSpecialFunc(otherKeyInput);
 	glutMainLoop();                                //Display everything and wait.
 }

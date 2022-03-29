@@ -27,6 +27,11 @@ public:
   bool IsAdversary() { return isAdversary; }
   void ToggleAdversary() { isAdversary = !isAdversary; }
   
+    
+    void setIsAdversary(bool _isAdv){
+        isAdversary=_isAdv;
+    }
+    
   Vector3d GetForceFromControl();
   void ResolveCollisionWithOtherAgents(vector<Agent>& agents);
   Vector3d GetEnvironmentalForce(double mag);
