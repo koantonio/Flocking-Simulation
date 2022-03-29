@@ -27,7 +27,7 @@ public:
   bool IsAdversary() { return isAdversary; }
   void ToggleAdversary() { isAdversary = !isAdversary; }
   
-    
+    //
     void setIsAdversary(bool _isAdv){
         isAdversary=_isAdv;
     }

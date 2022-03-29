@@ -313,6 +313,7 @@ void otherKeyInput(int key, int x, int y) {
       cout << "GLUT_KEY_RIGHT" << endl;
       gSim.SendControl("right");
       break;
+          //
   }
   glutPostRedisplay();
 }

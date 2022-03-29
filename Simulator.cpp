@@ -14,6 +14,7 @@ Simulator::Simulator() {
     double y = 50+200*(myRand()-0.5);
     double z = 0;
     bool isAdv;
+      //
     AddMember(i,x,y, isAdv);
     /*
     Vector3d pos(x,y,z);

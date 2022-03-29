@@ -154,7 +154,7 @@ void drawAttractionPt(double radius, int divisions, bool filled) {
   }
   glEnd();
 }
-
+//
 void Environment::Draw() {
   for(int i=0; i<rows; i++) 
     for(int j=0; j<columns; j++) {

@@ -468,6 +468,7 @@ void Agent::Draw() {
     }
     glEnd();
   }
+    //
 /*
   if( drawForce ) {
     glColor3f(1.0, 0.48, 0.0);
